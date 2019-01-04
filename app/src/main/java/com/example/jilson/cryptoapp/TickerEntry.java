@@ -7,7 +7,7 @@ final class TickerEntry {
     private Details details;
 
     // Setter
-    
+
     public void setSymbol(String symbol) {
         this.symbol = symbol;
     }
