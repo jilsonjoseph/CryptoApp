@@ -17,13 +17,13 @@ final class SimpleFragmentAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         if(position == 0) {
-            return new inrFragment();
+            return new InrFragment();
         }if(position == 1) {
-            return new bitcoinFragment();
+            return new BitcoinFragment();
         }if(position == 2){
-            return new etherFragment();
+            return new EtherFragment();
         } else {
-            return new rippleFragment();
+            return new RippleFragment();
         }
 
     }

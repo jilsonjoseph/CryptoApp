@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:gravity="center_vertical"
+            android:id="@+id/details_title"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:textSize="18sp"
+            android:paddingLeft="16dp"
+            android:textStyle="bold"
+            android:textColor="@android:color/white"
+            android:background="#212121"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="16dp">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="172dp"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:paddingTop="8dp"
+                    android:text="@string/highest_bid"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textSize="18sp"/>
+
+                <TextView
+                    android:paddingTop="8dp"
+                    android:text="@string/lowest_ask"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textSize="18sp"/>
+
+                <TextView
+                    android:paddingTop="8dp"
+                    android:text="@string/last_traded_price"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textSize="18sp"/>
+                <TextView
+                    android:paddingTop="8dp"
+                    android:text="@string/min_24hrs"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textSize="18sp"/>
+
+                <TextView
+                    android:paddingTop="8dp"
+                    android:text="@string/max_24hrs"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textSize="18sp"/>
+
+                <TextView
+                    android:paddingTop="8dp"
+                    android:text="@string/vol_24hrs"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textSize="18sp"/>
+
+                <TextView
+                    android:paddingTop="8dp"
+                    android:text="@string/currency_full_form"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textSize="18sp"/>
+
+                <TextView
+                    android:paddingTop="8dp"
+                    android:text="@string/currency_short_form"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textSize="18sp"/>
+
+                <TextView
+                    android:paddingTop="8dp"
+                    android:text="@string/baseCurrency"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textSize="18sp"/>
+                <TextView
+                    android:paddingTop="8dp"
+                    android:text="@string/per_change"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textSize="18sp"/>
+
+                <TextView
+                    android:paddingTop="8dp"
+                    android:text="@string/trade_volume"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textSize="18sp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_gravity="left"
+                    android:id="@+id/highest_bid"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="8dp"
+                    android:textSize="18sp"
+                    tools:text="11000" />
+
+                <TextView
+                    android:id="@+id/lowest_ask"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="8dp"
+                    android:textSize="18sp"
+                    tools:text="11075" />
+
+                <TextView
+                    android:id="@+id/last_traded_price"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="8dp"
+                    android:textSize="18sp"
+                    tools:text="11000" />
+
+                <TextView
+                    android:id="@+id/min_24hrs"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="8dp"
+                    android:textSize="18sp"
+                    tools:text="10600.0" />
+
+                <TextView
+                    android:id="@+id/max_24hrs"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="8dp"
+                    android:textSize="18sp"
+                    tools:text="11329.0" />
+
+                <TextView
+                    android:id="@+id/vol_24hrs"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="8dp"
+                    android:textSize="18sp"
+                    tools:text="178.985" />
+
+                <TextView
+                    android:id="@+id/currency_full_form"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="8dp"
+                    android:textSize="18sp"
+                    tools:text="ether" />
+
+                <TextView
+                    android:id="@+id/currency_short_form"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="8dp"
+                    android:textSize="18sp"
+                    tools:text="ETH" />
+
+                <TextView
+                    android:id="@+id/baseCurrency"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="8dp"
+                    android:textSize="18sp"
+                    tools:text="inr" />
+
+                <TextView
+                    android:id="@+id/per_change"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="8dp"
+                    android:textSize="18sp"
+                    tools:text="2.0692214902106336" />
+
+                <TextView
+                    android:id="@+id/trade_volume"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="8dp"
+                    android:textSize="18sp"
+                    tools:text="1712591.5068099997" />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+
+
+</ScrollView>
+
+

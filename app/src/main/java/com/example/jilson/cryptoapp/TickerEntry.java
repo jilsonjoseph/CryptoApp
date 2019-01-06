@@ -44,6 +44,7 @@ class Details{
     private Double vol24Hrs;
     private String currencyFullForm;
     private String currencyShortForm;
+    private String baseCurrency;
     private Double perChange;
     private Double tradeVolume;
 
@@ -82,6 +83,10 @@ class Details{
         this.currencyShortForm = currencyShortForm;
     }
 
+    public void setBaseCurrency(String baseCurrency) {
+        this.baseCurrency = baseCurrency;
+    }
+
     void setPerChange(Double perChange) {
         this.perChange = perChange;
     }
@@ -92,43 +97,47 @@ class Details{
 
     //Getters
 
-    public Double getHighestBid() {
+    Double getHighestBid() {
         return highestBid;
     }
 
-    public Double getLowestAsk() {
+    Double getLowestAsk() {
         return lowestAsk;
     }
 
-    public Double getLastTradedPrice() {
+    Double getLastTradedPrice() {
         return lastTradedPrice;
     }
 
-    public Double getMin24Hrs() {
+    Double getMin24Hrs() {
         return min24Hrs;
     }
 
-    public Double getMax24Hrs() {
+    Double getMax24Hrs() {
         return max24Hrs;
     }
 
-    public Double getVol24Hrs() {
+    Double getVol24Hrs() {
         return vol24Hrs;
     }
 
-    public String getCurrencyFullForm() {
+    String getCurrencyFullForm() {
         return currencyFullForm;
     }
 
-    public String getCurrencyShortForm() {
+    String getCurrencyShortForm() {
         return currencyShortForm;
     }
 
-    public Double getPerChange() {
+    public String getBaseCurrency() {
+        return baseCurrency;
+    }
+
+    Double getPerChange() {
         return perChange;
     }
 
-    public Double getTradeVolume() {
+    Double getTradeVolume() {
         return tradeVolume;
     }
 }

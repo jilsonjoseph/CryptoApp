@@ -8,4 +8,25 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!--message to display when no data is loaded -->
+    <string name="empty_textview_msg">No entries found!</string>
+
+    <!--message to display when internet is not available-->
+    <string name="no_internet">No Internet!</string>
+
+    <!--string names of each detail -->
+    <string name="highest_bid">Highest bid:</string>
+    <string name="lowest_ask">Lowest Ask:</string>
+    <string name="last_traded_price">Last Traded Price:</string>
+    <string name="min_24hrs">Min 24Hrs:</string>
+    <string name="max_24hrs">Max 24Hrs:</string>
+    <string name="vol_24hrs">Vol 24Hrs:</string>
+    <string name="currency_full_form">Currency Full Form:</string>
+    <string name="currency_short_form">Currency Short Form:</string>
+    <string name="baseCurrency">Base Currency:</string>
+    <string name="per_change">Per Change:</string>
+    <string name="trade_volume">Trade Volume:</string>
+
 </resources>
+

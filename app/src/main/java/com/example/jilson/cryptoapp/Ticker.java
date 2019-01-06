@@ -30,19 +30,20 @@ final class Ticker {
             "ZIL", "IOST", "ACT", "ZCO", "SNT", "POLY", "ELF", "TRX", "REP", "QKC", "XZC",
             "TUSD"};
 
-    private static List<TickerEntry> inrList = new ArrayList<TickerEntry>();
-    private static List<TickerEntry> bitcoinList = new ArrayList<TickerEntry>();
-    private static List<TickerEntry> etherList = new ArrayList<TickerEntry>();
-    private static List<TickerEntry> rippleList = new ArrayList<TickerEntry>();
+    private  List<TickerEntry> inrList = new ArrayList<TickerEntry>();
+    private  List<TickerEntry> bitcoinList = new ArrayList<TickerEntry>();
+    private  List<TickerEntry> etherList = new ArrayList<TickerEntry>();
+    private  List<TickerEntry> rippleList = new ArrayList<TickerEntry>();
 
-    static void fetchTicker(){
+    static Ticker fetchTicker(){
         String jsonResponse = HttpRequest.fetchData(TICKER_REQUEST_URL);
-        extractDataFromJSON(jsonResponse);
+        return extractDataFromJSON(jsonResponse);
     }
 
-    private static void extractDataFromJSON(String jsonResponse) {
+    private static Ticker extractDataFromJSON(String jsonResponse) {
         Log.v(LOG_TAG," in extractDataFromJSON method");
 
+        Ticker ticker = new Ticker();
         // Parsing JSON Response.
         try {
             JSONObject response = new JSONObject(jsonResponse);
@@ -85,10 +86,11 @@ final class Ticker {
                     rippleStats = stats.getJSONObject("ripple");
             }
 
-                listSetter(inrList,inrKeys,inrPrices,inrStats);
-                listSetter(bitcoinList,bitcoinKeys,bitcoinPrices,bitcoinStats);
-                listSetter(etherList,etherKeys,etherPrices,etherStats);
-                listSetter(rippleList,rippleKeys,ripplePrices,rippleStats);
+
+            ticker.setInrList(listSetter(inrKeys,inrPrices,inrStats));
+            ticker.setBitcoinList(listSetter(bitcoinKeys,bitcoinPrices,bitcoinStats));
+            ticker.setEtherList(listSetter(etherKeys,etherPrices,etherStats));
+            ticker.setRippleList(listSetter(rippleKeys,ripplePrices,rippleStats));
 
         } catch (JSONException e) {
             // If an error is thrown when executing any of the above statements in the "try" block,
@@ -96,6 +98,8 @@ final class Ticker {
             // with the message from the exception.
             Log.e("Ticker", "Error in parsing JSON results", e);
         }
+
+        return ticker;
     }
 
     /**
@@ -139,6 +143,10 @@ final class Ticker {
             detailsObject.setCurrencyShortForm(details.getString("currency_short_form"));
         }
 
+        if(details.has("baseCurrency")){
+            detailsObject.setBaseCurrency(details.getString("baseCurrency"));
+        }
+
         if(details.has("per_change")){
             detailsObject.setPerChange(details.getDouble("per_change"));
         }
@@ -153,11 +161,12 @@ final class Ticker {
     /**
      * Helper method to set list of  all entries
      * and returns a Details Object
-     * @param list the list to which all the entries to be added
      * @param keys keys for the given list
      * @param prices prices JSON object
      * @param stats stats JSON object**/
-    private static void listSetter(List<TickerEntry> list,String[] keys,JSONObject prices, JSONObject stats)throws JSONException{
+    private static List<TickerEntry> listSetter(String[] keys,JSONObject prices, JSONObject stats)throws JSONException{
+        List<TickerEntry> tickerEntryList = new ArrayList<TickerEntry>();
+
         for(int i = 0; (i< keys.length)&& (prices != null)&& (stats != null);i++){
             TickerEntry tickerEntry = new TickerEntry();
             // setting the symbol for each entry
@@ -172,44 +181,45 @@ final class Ticker {
                 tickerEntry.setDetails(detailsObject);
             }
             // Adding each entry to the list
-            list.add(tickerEntry);
+            tickerEntryList.add(tickerEntry);
         }
+        return tickerEntryList;
     }
 
     //Setter
 
-    public static void setInrList(List<TickerEntry> inr) {
-        Ticker.inrList = inr;
+    void setInrList(List<TickerEntry> inr) {
+        this.inrList = inr;
     }
 
-    public static void setBitcoinList(List<TickerEntry> bitcoin) {
-        Ticker.bitcoinList = bitcoin;
+    void setBitcoinList(List<TickerEntry> bitcoin) {
+        this.bitcoinList = bitcoin;
     }
 
-    public static void setEtherList(List<TickerEntry> ether) {
-        Ticker.etherList = ether;
+    void setEtherList(List<TickerEntry> ether) {
+        this.etherList = ether;
     }
 
-    public static void setRippleList(List<TickerEntry> ripple) {
-        Ticker.rippleList = ripple;
+    void setRippleList(List<TickerEntry> ripple) {
+        this.rippleList = ripple;
     }
 
     //Getter
 
 
-    public static List<TickerEntry> getInr() {
+    List<TickerEntry> getInrList() {
         return inrList;
     }
 
-    public static List<TickerEntry> getBitcoin() {
+    List<TickerEntry> getBitcoinList() {
         return bitcoinList;
     }
 
-    public static List<TickerEntry> getEther() {
+    List<TickerEntry> getEtherList() {
         return etherList;
     }
 
-    public static List<TickerEntry> getRipple() {
+    List<TickerEntry> getRippleList() {
         return rippleList;
     }
 }

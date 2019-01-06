@@ -57,6 +57,7 @@ final class HttpRequest {
 
     // This function makes http request and returns JŚON response
     private static String makeHttpRequest(URL url) throws IOException {
+        Log.v(LOG_TAG,"makeHttpRequest ^^^^^^^^^^^^^^^^^^^^");
         String jsonResponse = "";
 
         HttpURLConnection urlConnection = null;
