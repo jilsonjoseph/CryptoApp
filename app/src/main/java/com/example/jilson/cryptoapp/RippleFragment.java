@@ -34,31 +34,11 @@ public class RippleFragment extends Fragment implements LoaderManager.LoaderCall
     // Tag for Log
     public static final String LOG_TAG = RippleFragment.class.getSimpleName();
 
-    // in milliseconds
-    private static final long apiCallFrequency = 60000;
+
     private View rootView;
 
     public RippleFragment() {
         // Required empty public constructor
-    }
-
-    // Create the Handler object (on the main thread by default)
-    Handler handler = new Handler();
-    private Runnable runnableCode = new Runnable() {
-        @Override
-        public void run() {
-            // Repeat this the same runnable code block again every 60 seconds
-            handler.postDelayed(runnableCode, apiCallFrequency);
-
-            //Initiates reload of forceLoad() in TickerLoader
-            reload();
-        }
-    };
-
-
-    void reload(){
-        Intent intent = new Intent(TickerLoader.ACTION);
-        LocalBroadcastManager.getInstance(getContext()).sendBroadcast(intent);
     }
 
     @Override
@@ -106,8 +86,6 @@ public class RippleFragment extends Fragment implements LoaderManager.LoaderCall
             LoaderManager loaderManager = getLoaderManager();
             loaderManager.initLoader(0,null,this);
 
-            // Start the initial runnable task by posting through the handler
-            handler.post(runnableCode);
 
         }else {
 
@@ -143,6 +121,7 @@ public class RippleFragment extends Fragment implements LoaderManager.LoaderCall
         adapter.addAll(rippleList);
         adapter.notifyDataSetChanged();
         updateUi();
+        //ToDo: remove log
         Log.v(LOG_TAG,"in  onLoadfinished ###################################### Ripple");
     }
 

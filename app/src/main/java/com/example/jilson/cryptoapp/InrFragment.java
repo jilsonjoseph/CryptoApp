@@ -26,30 +26,9 @@ public class InrFragment extends Fragment implements LoaderManager.LoaderCallbac
 
     private TickerEntryAdapter adapter = null;
     private List<TickerEntry> inrList = new ArrayList<>();
-    // in milliseconds
-    private static final long apiCallFrequency = 60000;
 
     private static final String LOG_TAG = InrFragment.class.getSimpleName();
     private View rootView;
-
-
-    // Create the Handler object (on the main thread by default)
-    Handler handler = new Handler();
-    private Runnable runnableCode = new Runnable() {
-        @Override
-        public void run() {
-            // Repeat this the same runnable code block again every 60 seconds
-            handler.postDelayed(runnableCode, apiCallFrequency);
-
-            //Initiates reload of forceLoad() in TickerLoader
-            reload();
-        }
-    };
-
-    void reload(){
-        Intent intent = new Intent(TickerLoader.ACTION);
-        LocalBroadcastManager.getInstance(getContext()).sendBroadcast(intent);
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -95,7 +74,7 @@ public class InrFragment extends Fragment implements LoaderManager.LoaderCallbac
             loaderManager.initLoader(0,null,this);
 
             // Start the initial runnable task by posting through the handler
-            handler.post(runnableCode);
+            //handler.post(runnableCode);
 
         }else {
             // No internet hence no progress bar required so its hidden
@@ -131,6 +110,7 @@ public class InrFragment extends Fragment implements LoaderManager.LoaderCallbac
         adapter.addAll(inrList);
         adapter.notifyDataSetChanged();
         updateUi();
+        //ToDo: remove log
         Log.v(LOG_TAG,"in  onLoadfinished ###################################### Inr");
     }
 

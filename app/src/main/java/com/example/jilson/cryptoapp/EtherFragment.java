@@ -31,33 +31,11 @@ public class EtherFragment extends Fragment implements LoaderManager.LoaderCallb
     private TickerEntryAdapter adapter;
     private List<TickerEntry> etherList = new ArrayList<>();
 
-    // in milliseconds
-    private static final long apiCallFrequency = 60000;
-
     private static final String LOG_TAG = EtherFragment.class.getSimpleName();
     private View rootView;
 
     public EtherFragment() {
         // Required empty public constructor
-    }
-
-    // Create the Handler object (on the main thread by default)
-    Handler handler = new Handler();
-    private Runnable runnableCode = new Runnable() {
-        @Override
-        public void run() {
-
-            // Repeat this the same runnable code block again every 60 seconds
-            handler.postDelayed(runnableCode, apiCallFrequency);
-
-            //Initiates reload of forceLoad() in TickerLoader
-            reload();
-        }
-    };
-
-    void reload(){
-        Intent intent = new Intent(TickerLoader.ACTION);
-        LocalBroadcastManager.getInstance(getContext()).sendBroadcast(intent);
     }
 
     @Override
@@ -105,7 +83,7 @@ public class EtherFragment extends Fragment implements LoaderManager.LoaderCallb
             loaderManager.initLoader(0,null,this);
 
             // Start the initial runnable task by posting through the handler
-            handler.post(runnableCode);
+            //handler.post(runnableCode);
 
         }else {
 
@@ -141,6 +119,7 @@ public class EtherFragment extends Fragment implements LoaderManager.LoaderCallb
         adapter.addAll(etherList);
         adapter.notifyDataSetChanged();
         updateUi();
+        //ToDo: remove log
         Log.v(LOG_TAG,"in  onLoadfinished ###################################### Ether");
     }
 
