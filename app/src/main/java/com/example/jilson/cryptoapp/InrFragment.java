@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.support.v4.content.Loader;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,10 +29,8 @@ public class InrFragment extends Fragment implements LoaderManager.LoaderCallbac
     // in milliseconds
     private static final long apiCallFrequency = 60000;
 
-    private static final String LOG_TAG = InrFragment.class.getName();
+    private static final String LOG_TAG = InrFragment.class.getSimpleName();
     private View rootView;
-
-
 
 
     // Create the Handler object (on the main thread by default)
@@ -42,15 +41,14 @@ public class InrFragment extends Fragment implements LoaderManager.LoaderCallbac
             // Repeat this the same runnable code block again every 60 seconds
             handler.postDelayed(runnableCode, apiCallFrequency);
 
-            //Initiate the loader
-            loaderInitiator();
+            //Initiates reload of forceLoad() in TickerLoader
+            reload();
         }
     };
 
-    void loaderInitiator(){
-        // Using Loader to fetch data in a bockground thread
-        LoaderManager loaderManager = getLoaderManager();
-        loaderManager.restartLoader(0,null,this);
+    void reload(){
+        Intent intent = new Intent(TickerLoader.ACTION);
+        LocalBroadcastManager.getInstance(getContext()).sendBroadcast(intent);
     }
 
     @Override
@@ -133,12 +131,12 @@ public class InrFragment extends Fragment implements LoaderManager.LoaderCallbac
         adapter.addAll(inrList);
         adapter.notifyDataSetChanged();
         updateUi();
+        Log.v(LOG_TAG,"in  onLoadfinished ###################################### Inr");
     }
 
     @Override
     public void onLoaderReset(Loader<Ticker> loader) {
-        LoaderManager loaderManager = getLoaderManager();
-        loaderManager.destroyLoader(0);
+
     }
 
     // Helper method to access network state

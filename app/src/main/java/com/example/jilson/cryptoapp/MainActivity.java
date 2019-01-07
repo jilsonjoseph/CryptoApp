@@ -9,9 +9,11 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 
 
 public class MainActivity extends AppCompatActivity  {
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +33,7 @@ public class MainActivity extends AppCompatActivity  {
         /* tab layout object created and initialized */
         TabLayout tabLayout = findViewById(R.id.sliding_tab);
         tabLayout.setupWithViewPager(viewPager);
+        
     }
 
     // Helper method to access network state

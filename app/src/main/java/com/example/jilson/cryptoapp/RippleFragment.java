@@ -12,6 +12,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,10 +30,12 @@ public class RippleFragment extends Fragment implements LoaderManager.LoaderCall
 
     private TickerEntryAdapter adapter;
     private List<TickerEntry> rippleList = new ArrayList<>();
+
+    // Tag for Log
+    public static final String LOG_TAG = RippleFragment.class.getSimpleName();
+
     // in milliseconds
     private static final long apiCallFrequency = 60000;
-
-    private static final String LOG_TAG = InrFragment.class.getName();
     private View rootView;
 
     public RippleFragment() {
@@ -47,15 +50,15 @@ public class RippleFragment extends Fragment implements LoaderManager.LoaderCall
             // Repeat this the same runnable code block again every 60 seconds
             handler.postDelayed(runnableCode, apiCallFrequency);
 
-            //Initiate the loader
-            loaderInitiator();
+            //Initiates reload of forceLoad() in TickerLoader
+            reload();
         }
     };
 
-    void loaderInitiator(){
-        // Using Loader to fetch data in a bockground thread
-        LoaderManager loaderManager = getLoaderManager();
-        loaderManager.restartLoader(3,null,this);
+
+    void reload(){
+        Intent intent = new Intent(TickerLoader.ACTION);
+        LocalBroadcastManager.getInstance(getContext()).sendBroadcast(intent);
     }
 
     @Override
@@ -99,8 +102,9 @@ public class RippleFragment extends Fragment implements LoaderManager.LoaderCall
                 }
             });
 
+            // Using Loader to fetch data in a bockground thread
             LoaderManager loaderManager = getLoaderManager();
-            loaderManager.initLoader(3,null,this);
+            loaderManager.initLoader(0,null,this);
 
             // Start the initial runnable task by posting through the handler
             handler.post(runnableCode);
@@ -139,12 +143,12 @@ public class RippleFragment extends Fragment implements LoaderManager.LoaderCall
         adapter.addAll(rippleList);
         adapter.notifyDataSetChanged();
         updateUi();
+        Log.v(LOG_TAG,"in  onLoadfinished ###################################### Ripple");
     }
 
     @Override
     public void onLoaderReset(@NonNull Loader<Ticker> loader) {
-        LoaderManager loaderManager = getLoaderManager();
-        loaderManager.destroyLoader(3);
+
     }
 
     // Helper method to access network state

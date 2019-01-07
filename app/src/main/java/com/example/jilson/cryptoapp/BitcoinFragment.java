@@ -12,6 +12,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,7 +34,7 @@ public class BitcoinFragment extends Fragment implements LoaderManager.LoaderCal
     // in milliseconds
     private static final long apiCallFrequency = 60000;
 
-    private static final String LOG_TAG = InrFragment.class.getName();
+    private static final String LOG_TAG = BitcoinFragment.class.getSimpleName();
     private View rootView;
 
     public BitcoinFragment() {
@@ -48,15 +49,14 @@ public class BitcoinFragment extends Fragment implements LoaderManager.LoaderCal
             // Repeat this the same runnable code block again every 60 seconds
             handler.postDelayed(runnableCode, apiCallFrequency);
 
-            //Initiate the loader
-            loaderInitiator();
+            //Initiates reload of forceLoad() in TickerLoader
+            reload();
         }
     };
 
-    void loaderInitiator(){
-        // Using Loader to fetch data in a bockground thread
-        LoaderManager loaderManager = getLoaderManager();
-        loaderManager.restartLoader(1,null,this);
+    void reload(){
+        Intent intent = new Intent(TickerLoader.ACTION);
+        LocalBroadcastManager.getInstance(getContext()).sendBroadcast(intent);
     }
 
     @Override
@@ -101,7 +101,7 @@ public class BitcoinFragment extends Fragment implements LoaderManager.LoaderCal
             });
 
             LoaderManager loaderManager = getLoaderManager();
-            loaderManager.initLoader(1,null,this);
+            loaderManager.initLoader(0,null,this);
 
             // Start the initial runnable task by posting through the handler
             handler.post(runnableCode);
@@ -140,12 +140,12 @@ public class BitcoinFragment extends Fragment implements LoaderManager.LoaderCal
         adapter.addAll(bitcoinList);
         adapter.notifyDataSetChanged();
         updateUi();
+        Log.v(LOG_TAG,"in  onLoadfinished ###################################### Bitcoin");
     }
 
     @Override
     public void onLoaderReset(@NonNull Loader<Ticker> loader) {
-        LoaderManager loaderManager = getLoaderManager();
-        loaderManager.destroyLoader(1);
+
     }
 
     // Helper method to access network state
