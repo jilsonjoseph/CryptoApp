@@ -6,8 +6,6 @@
     <string name="ether">ETH</string>
     <string name="ripple">XRP</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <!--message to display when no data is loaded -->
     <string name="empty_textview_msg">No entries found!</string>

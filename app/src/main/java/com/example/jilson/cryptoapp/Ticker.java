@@ -30,20 +30,24 @@ final class Ticker {
             "ZIL", "IOST", "ACT", "ZCO", "SNT", "POLY", "ELF", "TRX", "REP", "QKC", "XZC",
             "TUSD"};
 
+    // seperate list for each base currency
     private  List<TickerEntry> inrList = new ArrayList<TickerEntry>();
     private  List<TickerEntry> bitcoinList = new ArrayList<TickerEntry>();
     private  List<TickerEntry> etherList = new ArrayList<TickerEntry>();
     private  List<TickerEntry> rippleList = new ArrayList<TickerEntry>();
 
+    // fetches Ticker
     static Ticker fetchTicker(){
         String jsonResponse = HttpRequest.fetchData(TICKER_REQUEST_URL);
         return extractDataFromJSON(jsonResponse);
     }
 
+    // Extract the data form JSON response
     private static Ticker extractDataFromJSON(String jsonResponse) {
         Log.v(LOG_TAG," in extractDataFromJSON method");
 
         Ticker ticker = new Ticker();
+
         // Parsing JSON Response.
         try {
             JSONObject response = new JSONObject(jsonResponse);
@@ -86,7 +90,7 @@ final class Ticker {
                     rippleStats = stats.getJSONObject("ripple");
             }
 
-
+            // sets each base currency list with listSetter function
             ticker.setInrList(listSetter(inrKeys,inrPrices,inrStats));
             ticker.setBitcoinList(listSetter(bitcoinKeys,bitcoinPrices,bitcoinStats));
             ticker.setEtherList(listSetter(etherKeys,etherPrices,etherStats));
@@ -163,7 +167,8 @@ final class Ticker {
      * and returns a Details Object
      * @param keys keys for the given list
      * @param prices prices JSON object
-     * @param stats stats JSON object**/
+     * @param stats stats JSON object
+     * @return  returns a list of TickerEntry**/
     private static List<TickerEntry> listSetter(String[] keys,JSONObject prices, JSONObject stats)throws JSONException{
         List<TickerEntry> tickerEntryList = new ArrayList<TickerEntry>();
 
@@ -188,19 +193,19 @@ final class Ticker {
 
     //Setter
 
-    void setInrList(List<TickerEntry> inr) {
+    private void setInrList(List<TickerEntry> inr) {
         this.inrList = inr;
     }
 
-    void setBitcoinList(List<TickerEntry> bitcoin) {
+    private void setBitcoinList(List<TickerEntry> bitcoin) {
         this.bitcoinList = bitcoin;
     }
 
-    void setEtherList(List<TickerEntry> ether) {
+    private void setEtherList(List<TickerEntry> ether) {
         this.etherList = ether;
     }
 
-    void setRippleList(List<TickerEntry> ripple) {
+    private void setRippleList(List<TickerEntry> ripple) {
         this.rippleList = ripple;
     }
 

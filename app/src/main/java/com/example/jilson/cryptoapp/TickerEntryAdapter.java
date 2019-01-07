@@ -8,10 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
-
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
-import java.util.ArrayList;
 import java.util.List;
 
 final class TickerEntryAdapter extends ArrayAdapter<TickerEntry> {
@@ -29,6 +27,7 @@ final class TickerEntryAdapter extends ArrayAdapter<TickerEntry> {
             listItemView = LayoutInflater.from(getContext()).inflate(R.layout.list_item, parent, false);
         }
 
+        // gets the entry at the specific position
         TickerEntry tickerEntry = getItem(position);
 
         /*text view object created and ticker symbol set*/
@@ -39,7 +38,7 @@ final class TickerEntryAdapter extends ArrayAdapter<TickerEntry> {
         DecimalFormatSymbols decimalFormatSymbols = new DecimalFormatSymbols();
         decimalFormatSymbols.setDecimalSeparator('.');
         decimalFormatSymbols.setGroupingSeparator(',');
-        DecimalFormat decimalFormat = new DecimalFormat("#,##0.#####", decimalFormatSymbols);
+        DecimalFormat decimalFormat = new DecimalFormat("#,##0.########", decimalFormatSymbols);
 
         /*text view object created and ticker price set*/
         TextView priceTextView = listItemView.findViewById(R.id.value);

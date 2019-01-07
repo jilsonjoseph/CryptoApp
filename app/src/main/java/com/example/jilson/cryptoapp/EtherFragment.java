@@ -30,6 +30,9 @@ public class EtherFragment extends Fragment implements LoaderManager.LoaderCallb
     private TickerEntryAdapter adapter;
     private List<TickerEntry> etherList = new ArrayList<>();
 
+    // in milliseconds
+    private static final long apiCallFrequency = 60000;
+
     private static final String LOG_TAG = InrFragment.class.getName();
     private View rootView;
 
@@ -42,18 +45,19 @@ public class EtherFragment extends Fragment implements LoaderManager.LoaderCallb
     private Runnable runnableCode = new Runnable() {
         @Override
         public void run() {
-            //Initiate the loader
-            loaderInitializer();
+
             // Repeat this the same runnable code block again every 60 seconds
-            handler.postDelayed(runnableCode, 60000);
+            handler.postDelayed(runnableCode, apiCallFrequency);
+
+            //Initiate the loader
+            loaderInitiator();
         }
     };
 
-    void loaderInitializer(){
+    void loaderInitiator(){
         // Using Loader to fetch data in a bockground thread
         LoaderManager loaderManager = getLoaderManager();
-        loaderManager.initLoader(1,null,this);
-        Log.v(LOG_TAG,"Running every 5 second ################################");
+        loaderManager.restartLoader(2,null,this);
     }
 
     @Override
@@ -69,9 +73,6 @@ public class EtherFragment extends Fragment implements LoaderManager.LoaderCallb
             /*list view is initiliased and adapter is set to listview*/
             ListView listView = rootView.findViewById(R.id.list);
             listView.setAdapter(adapter);
-
-            // Start the initial runnable task by posting through the handler
-            handler.post(runnableCode);
 
             /*onitemclick listener is set to listview*/
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -99,6 +100,12 @@ public class EtherFragment extends Fragment implements LoaderManager.LoaderCallb
                     startActivity(intent);
                 }
             });
+
+            LoaderManager loaderManager = getLoaderManager();
+            loaderManager.initLoader(2,null,this);
+
+            // Start the initial runnable task by posting through the handler
+            handler.post(runnableCode);
 
         }else {
 
@@ -138,7 +145,8 @@ public class EtherFragment extends Fragment implements LoaderManager.LoaderCallb
 
     @Override
     public void onLoaderReset(@NonNull Loader<Ticker> loader) {
-
+        LoaderManager loaderManager = getLoaderManager();
+        loaderManager.destroyLoader(2);
     }
 
     // Helper method to access network state

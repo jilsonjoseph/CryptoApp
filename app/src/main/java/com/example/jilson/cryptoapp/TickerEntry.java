@@ -2,6 +2,7 @@ package com.example.jilson.cryptoapp;
 
 final class TickerEntry {
 
+    // Each entry stores 3 member field
     private String symbol;
     private Double price;
     private Details details;
@@ -12,11 +13,11 @@ final class TickerEntry {
         this.symbol = symbol;
     }
 
-    public void setPrice(Double price) {
+    void setPrice(Double price) {
         this.price = price;
     }
 
-    public void setDetails(Details details) {
+    void setDetails(Details details) {
         this.details = details;
     }
 
@@ -26,16 +27,17 @@ final class TickerEntry {
         return symbol;
     }
 
-    public Double getPrice() {
+    Double getPrice() {
         return price;
     }
 
-    public Details getDetails() {
+    Details getDetails() {
         return details;
     }
 }
 
 class Details{
+    // a details object has all details
     private Double highestBid;
     private Double lowestAsk;
     private Double lastTradedPrice;
@@ -83,7 +85,7 @@ class Details{
         this.currencyShortForm = currencyShortForm;
     }
 
-    public void setBaseCurrency(String baseCurrency) {
+    void setBaseCurrency(String baseCurrency) {
         this.baseCurrency = baseCurrency;
     }
 
@@ -129,7 +131,7 @@ class Details{
         return currencyShortForm;
     }
 
-    public String getBaseCurrency() {
+    String getBaseCurrency() {
         return baseCurrency;
     }
 

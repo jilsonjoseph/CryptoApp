@@ -11,7 +11,7 @@ import java.util.TimerTask;
 
 final class TickerLoader extends AsyncTaskLoader<Ticker> {
 
-    public TickerLoader(@NonNull Context context) {
+    TickerLoader(@NonNull Context context) {
         super(context);
     }
 
