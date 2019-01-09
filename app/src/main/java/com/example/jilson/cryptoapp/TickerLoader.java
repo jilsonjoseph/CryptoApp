@@ -11,10 +11,14 @@ import android.support.v4.content.LocalBroadcastManager;
 
 final class TickerLoader extends AsyncTaskLoader<Ticker>{
 
+    static final String ACTION = "com.loaders.FORCE";
+
+    // for cashing data when switching between fragments
+    private static  Ticker cashedTicker;
+
     TickerLoader(@NonNull Context context) {
         super(context);
     }
-    static final String ACTION = "com.loaders.FORCE";
 
     @Override
     protected void onStartLoading() {
@@ -22,13 +26,24 @@ final class TickerLoader extends AsyncTaskLoader<Ticker>{
         IntentFilter filter = new IntentFilter(ACTION);
         manager.registerReceiver(broadcastReceiver,filter);
 
-        forceLoad();
+        if(cashedTicker == null){
+            forceLoad();
+        }else {
+            super.deliverResult(cashedTicker);
+        }
+
     }
 
     @Nullable
     @Override
     public Ticker loadInBackground() {
         return Ticker.fetchTicker();
+    }
+
+    @Override
+    public void deliverResult(@Nullable Ticker data) {
+        cashedTicker = data;
+        super.deliverResult(data);
     }
 
     @Override
