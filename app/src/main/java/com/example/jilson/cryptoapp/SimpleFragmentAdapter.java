@@ -1,6 +1,7 @@
 package com.example.jilson.cryptoapp;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -14,18 +15,14 @@ final class SimpleFragmentAdapter extends FragmentPagerAdapter {
         this.context = context;
     }
 
+    /*new fragment is returned according to the position*/
     @Override
     public Fragment getItem(int position) {
-        if(position == 0) {
-            return new InrFragment();
-        }if(position == 1) {
-            return new BitcoinFragment();
-        }if(position == 2){
-            return new EtherFragment();
-        } else {
-            return new RippleFragment();
-        }
-
+        Fragment fragment = new SubFragment();
+        Bundle bundle = new Bundle();
+        bundle.putInt("fragment_id",position);
+        fragment.setArguments(bundle);
+        return fragment;
     }
 
     @Override

@@ -72,15 +72,4 @@ public class MainActivity extends AppCompatActivity  {
         LocalBroadcastManager.getInstance(getBaseContext()).sendBroadcast(intent);
     }
 
-    // Helper method to access network state
-    boolean connected(){
-        Context context = this;
-        ConnectivityManager cm =
-                (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
-
-        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-        boolean isConnected = activeNetwork != null &&
-                activeNetwork.isConnectedOrConnecting();
-        return isConnected;
-    }
 }

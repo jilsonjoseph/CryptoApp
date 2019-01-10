@@ -1,18 +1,13 @@
 package com.example.jilson.cryptoapp;
 
-
-import android.content.Context;
-import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.os.Bundle;
-import android.os.Handler;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
+import android.content.Context;
+import android.content.Intent;
 import android.support.v4.content.Loader;
-import android.support.v4.content.LocalBroadcastManager;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,39 +16,32 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class RippleFragment extends Fragment implements LoaderManager.LoaderCallbacks<Ticker> {
+public class SubFragment extends Fragment implements LoaderManager.LoaderCallbacks<Ticker> {
 
-    private TickerEntryAdapter adapter;
-    private List<TickerEntry> rippleList = new ArrayList<>();
+    private TickerEntryAdapter adapter = null;
+    private List<TickerEntry> currencyList = new ArrayList<>();
+    private int fragmentId;
 
-    // Tag for Log
-    public static final String LOG_TAG = RippleFragment.class.getSimpleName();
-
-
+    private static final String LOG_TAG = SubFragment.class.getSimpleName();
     private View rootView;
-
-    public RippleFragment() {
-        // Required empty public constructor
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        //getting the id of fragment
+        fragmentId = getArguments().getInt("fragment_id");
         /*initialising rootview*/
         rootView = inflater.inflate(R.layout.list,container,false);
 
+        //Fetch data only if Internet is connected
         if(connected()){
-
-            /*declare and initilize new adapter*/
-            adapter = new TickerEntryAdapter(getActivity(),new ArrayList<TickerEntry>());
-
             /*list view is initiliased and adapter is set to listview*/
             ListView listView = rootView.findViewById(R.id.list);
+            adapter = new TickerEntryAdapter(getActivity(),new ArrayList<TickerEntry>());
             listView.setAdapter(adapter);
 
             /*onitemclick listener is set to listview*/
@@ -61,10 +49,10 @@ public class RippleFragment extends Fragment implements LoaderManager.LoaderCall
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-                    TickerEntry tickerEntry = rippleList.get(i);
+                    TickerEntry tickerEntry = currencyList.get(i);
                     Details details = tickerEntry.getDetails();
 
-                    //intent to start new activity and data is also bassed to the new activity
+                    //intent to start new activity and data is also passed to the new activity
                     Intent intent = new Intent(getActivity(),DetailsActivity.class);
                     Bundle bundle = new Bundle();
                     bundle.putDouble("highest_bid",details.getHighestBid());
@@ -83,13 +71,10 @@ public class RippleFragment extends Fragment implements LoaderManager.LoaderCall
                 }
             });
 
-            // Using Loader to fetch data in a bockground thread
             LoaderManager loaderManager = getLoaderManager();
             loaderManager.initLoader(0,null,this);
 
-
         }else {
-
             // No internet hence no progress bar required so its hidden
             ProgressBar progressBar = (ProgressBar)rootView.findViewById(R.id.progress_bar);
             progressBar.setVisibility(View.GONE);
@@ -109,25 +94,39 @@ public class RippleFragment extends Fragment implements LoaderManager.LoaderCall
         progressBar.setVisibility(View.GONE);
     }
 
-    @NonNull
     @Override
-    public Loader<Ticker> onCreateLoader(int i, @Nullable Bundle bundle) {
+    public Loader<Ticker> onCreateLoader(int i, Bundle bundle) {
+
         return new TickerLoader(getActivity());
     }
 
     @Override
-    public void onLoadFinished(@NonNull Loader<Ticker> loader, Ticker ticker) {
-        this.rippleList = ticker.getRippleList();
+    public void onLoadFinished(Loader<Ticker> loader, Ticker ticker) {
+
+        // currencyList is populated according to the fragmentId
+        switch (fragmentId){
+            case 0:
+                this.currencyList = ticker.getInrList();
+                break;
+            case 1:
+                this.currencyList = ticker.getBitcoinList();
+                break;
+            case 2:
+                this.currencyList = ticker.getEtherList();
+                break;
+            case 3:
+                this.currencyList = ticker.getRippleList();
+        }
         adapter.clear();
-        adapter.addAll(rippleList);
+        adapter.addAll(currencyList);
         adapter.notifyDataSetChanged();
         updateUi();
         //ToDo: remove log
-        Log.v(LOG_TAG,"in  onLoadfinished ###################################### Ripple");
+        Log.v(LOG_TAG,"in  onLoadfinished ###################################### Fragment Id:"+fragmentId);
     }
 
     @Override
-    public void onLoaderReset(@NonNull Loader<Ticker> loader) {
+    public void onLoaderReset(Loader<Ticker> loader) {
 
     }
 
