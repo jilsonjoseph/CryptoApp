@@ -82,9 +82,6 @@ public class EtherFragment extends Fragment implements LoaderManager.LoaderCallb
             LoaderManager loaderManager = getLoaderManager();
             loaderManager.initLoader(0,null,this);
 
-            // Start the initial runnable task by posting through the handler
-            //handler.post(runnableCode);
-
         }else {
 
             // No internet hence no progress bar required so its hidden

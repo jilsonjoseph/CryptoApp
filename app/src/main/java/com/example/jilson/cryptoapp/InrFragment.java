@@ -73,9 +73,6 @@ public class InrFragment extends Fragment implements LoaderManager.LoaderCallbac
             LoaderManager loaderManager = getLoaderManager();
             loaderManager.initLoader(0,null,this);
 
-            // Start the initial runnable task by posting through the handler
-            //handler.post(runnableCode);
-
         }else {
             // No internet hence no progress bar required so its hidden
             ProgressBar progressBar = (ProgressBar)rootView.findViewById(R.id.progress_bar);

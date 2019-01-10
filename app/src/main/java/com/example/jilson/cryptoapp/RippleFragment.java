@@ -44,9 +44,10 @@ public class RippleFragment extends Fragment implements LoaderManager.LoaderCall
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        /*initialising rootview*/
+        rootView = inflater.inflate(R.layout.list,container,false);
+
         if(connected()){
-            /*initialising rootview*/
-            rootView = inflater.inflate(R.layout.list,container,false);
 
             /*declare and initilize new adapter*/
             adapter = new TickerEntryAdapter(getActivity(),new ArrayList<TickerEntry>());
